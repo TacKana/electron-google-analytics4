@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 class Analytics4 {
     trackingID;
     secretKey;
@@ -7,13 +7,14 @@ class Analytics4 {
     sessionID;
     customParams = {};
     userProperties = null;
-    baseURL = 'https://google-analytics.com/mp';
-    collectURL = '/collect';
-    constructor(trackingID, secretKey, clientID = uuidv4(), sessionID = uuidv4()) {
+    baseURL = "https://google-analytics.com/mp";
+    collectURL = "/collect";
+    constructor(trackingID, secretKey, clientID = uuidv4(), sessionID = uuidv4(), baseURL) {
         this.trackingID = trackingID;
         this.secretKey = secretKey;
         this.clientID = clientID;
         this.sessionID = sessionID;
+        this.baseURL = baseURL ?? this.baseURL;
     }
     set(key, value) {
         if (value !== null) {
@@ -25,7 +26,7 @@ class Analytics4 {
         return this;
     }
     setParams(params) {
-        if (typeof params === 'object' && Object.keys(params).length > 0) {
+        if (typeof params === "object" && Object.keys(params).length > 0) {
             Object.assign(this.customParams, params);
         }
         else {
@@ -34,7 +35,7 @@ class Analytics4 {
         return this;
     }
     setUserProperties(upValue) {
-        if (typeof upValue === 'object' && Object.keys(upValue).length > 0) {
+        if (typeof upValue === "object" && Object.keys(upValue).length > 0) {
             this.userProperties = upValue;
         }
         else {
@@ -58,9 +59,7 @@ class Analytics4 {
         if (this.userProperties) {
             Object.assign(payload, { user_properties: this.userProperties });
         }
-        return axios
-            .post(`${this.baseURL}${this.collectURL}?measurement_id=${this.trackingID}&api_secret=${this.secretKey}`, payload);
+        return axios.post(`${this.baseURL}${this.collectURL}?measurement_id=${this.trackingID}&api_secret=${this.secretKey}`, payload);
     }
-    ;
 }
 export default Analytics4;

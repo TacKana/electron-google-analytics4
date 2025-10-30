@@ -12,13 +12,14 @@ class Analytics4 {
     sessionID;
     customParams = {};
     userProperties = null;
-    baseURL = 'https://google-analytics.com/mp';
-    collectURL = '/collect';
-    constructor(trackingID, secretKey, clientID = (0, uuid_1.v4)(), sessionID = (0, uuid_1.v4)()) {
+    baseURL = "https://google-analytics.com/mp";
+    collectURL = "/collect";
+    constructor(trackingID, secretKey, clientID = (0, uuid_1.v4)(), sessionID = (0, uuid_1.v4)(), baseURL) {
         this.trackingID = trackingID;
         this.secretKey = secretKey;
         this.clientID = clientID;
         this.sessionID = sessionID;
+        this.baseURL = baseURL ?? this.baseURL;
     }
     set(key, value) {
         if (value !== null) {
@@ -30,7 +31,7 @@ class Analytics4 {
         return this;
     }
     setParams(params) {
-        if (typeof params === 'object' && Object.keys(params).length > 0) {
+        if (typeof params === "object" && Object.keys(params).length > 0) {
             Object.assign(this.customParams, params);
         }
         else {
@@ -39,7 +40,7 @@ class Analytics4 {
         return this;
     }
     setUserProperties(upValue) {
-        if (typeof upValue === 'object' && Object.keys(upValue).length > 0) {
+        if (typeof upValue === "object" && Object.keys(upValue).length > 0) {
             this.userProperties = upValue;
         }
         else {
@@ -63,9 +64,7 @@ class Analytics4 {
         if (this.userProperties) {
             Object.assign(payload, { user_properties: this.userProperties });
         }
-        return axios_1.default
-            .post(`${this.baseURL}${this.collectURL}?measurement_id=${this.trackingID}&api_secret=${this.secretKey}`, payload);
+        return axios_1.default.post(`${this.baseURL}${this.collectURL}?measurement_id=${this.trackingID}&api_secret=${this.secretKey}`, payload);
     }
-    ;
 }
 exports.default = Analytics4;
