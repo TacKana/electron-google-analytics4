@@ -67,4 +67,5 @@ class Analytics4 {
         return axios_1.default.post(`${this.baseURL}${this.collectURL}?measurement_id=${this.trackingID}&api_secret=${this.secretKey}`, payload);
     }
 }
-exports.default = Analytics4;
+module.exports = Analytics4;
+module.exports.default = Analytics4;
