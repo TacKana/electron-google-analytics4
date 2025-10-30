@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Analytics4 = void 0;
 const uuid_1 = require("uuid");
 const axios_1 = __importDefault(require("axios"));
 class Analytics4 {
@@ -12,14 +13,14 @@ class Analytics4 {
     sessionID;
     customParams = {};
     userProperties = null;
-    baseURL = "https://google-analytics.com/mp";
+    baseURL;
     collectURL = "/collect";
-    constructor(trackingID, secretKey, clientID = (0, uuid_1.v4)(), sessionID = (0, uuid_1.v4)(), baseURL) {
+    constructor(baseURL = "https://google-analytics.com/mp", trackingID, secretKey, clientID = (0, uuid_1.v4)(), sessionID = (0, uuid_1.v4)()) {
+        this.baseURL = baseURL;
         this.trackingID = trackingID;
         this.secretKey = secretKey;
         this.clientID = clientID;
         this.sessionID = sessionID;
-        this.baseURL = baseURL ?? this.baseURL;
     }
     set(key, value) {
         if (value !== null) {
@@ -67,4 +68,4 @@ class Analytics4 {
         return axios_1.default.post(`${this.baseURL}${this.collectURL}?measurement_id=${this.trackingID}&api_secret=${this.secretKey}`, payload);
     }
 }
-exports.default = Analytics4;
+exports.Analytics4 = Analytics4;

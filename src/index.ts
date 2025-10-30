@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-class Analytics4 {
+export class Analytics4 {
   private trackingID: string;
   private secretKey: string;
   private clientID: string;
@@ -9,21 +9,21 @@ class Analytics4 {
   private customParams: Record<string, unknown> = {};
   private userProperties: Record<string, unknown> | null = null;
 
-  private baseURL: string = "https://google-analytics.com/mp";
+  private baseURL: string;
   private collectURL = "/collect";
 
   constructor(
+    baseURL = "https://google-analytics.com/mp",
     trackingID: string,
     secretKey: string,
     clientID: string = uuidv4(),
-    sessionID = uuidv4(),
-    baseURL?: string
+    sessionID = uuidv4()
   ) {
+    this.baseURL = baseURL;
     this.trackingID = trackingID;
     this.secretKey = secretKey;
     this.clientID = clientID;
     this.sessionID = sessionID;
-    this.baseURL = baseURL ?? this.baseURL;
   }
 
   set(key: string, value: any) {
@@ -80,5 +80,3 @@ class Analytics4 {
     );
   }
 }
-
-export default Analytics4;

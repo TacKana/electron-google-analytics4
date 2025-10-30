@@ -1,20 +1,20 @@
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-class Analytics4 {
+export class Analytics4 {
     trackingID;
     secretKey;
     clientID;
     sessionID;
     customParams = {};
     userProperties = null;
-    baseURL = "https://google-analytics.com/mp";
+    baseURL;
     collectURL = "/collect";
-    constructor(trackingID, secretKey, clientID = uuidv4(), sessionID = uuidv4(), baseURL) {
+    constructor(baseURL = "https://google-analytics.com/mp", trackingID, secretKey, clientID = uuidv4(), sessionID = uuidv4()) {
+        this.baseURL = baseURL;
         this.trackingID = trackingID;
         this.secretKey = secretKey;
         this.clientID = clientID;
         this.sessionID = sessionID;
-        this.baseURL = baseURL ?? this.baseURL;
     }
     set(key, value) {
         if (value !== null) {
@@ -62,4 +62,3 @@ class Analytics4 {
         return axios.post(`${this.baseURL}${this.collectURL}?measurement_id=${this.trackingID}&api_secret=${this.secretKey}`, payload);
     }
 }
-export default Analytics4;

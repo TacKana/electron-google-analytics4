@@ -1,4 +1,4 @@
-declare class Analytics4 {
+export declare class Analytics4 {
     private trackingID;
     private secretKey;
     private clientID;
@@ -7,10 +7,9 @@ declare class Analytics4 {
     private userProperties;
     private baseURL;
     private collectURL;
-    constructor(trackingID: string, secretKey: string, clientID?: string, sessionID?: string, baseURL?: string);
+    constructor(baseURL: string | undefined, trackingID: string, secretKey: string, clientID?: string, sessionID?: string);
     set(key: string, value: any): this;
     setParams(params?: Record<string, unknown>): this;
     setUserProperties(upValue?: Record<string, unknown>): this;
     event(eventName: string): Promise<any>;
 }
-export default Analytics4;
