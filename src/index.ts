@@ -81,4 +81,5 @@ class Analytics4 {
   }
 }
 
-export default Analytics4;
+module.exports = Analytics4;
+module.exports.default = Analytics4;
